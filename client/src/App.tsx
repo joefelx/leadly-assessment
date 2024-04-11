@@ -1,21 +1,26 @@
-import Brands from "./components/Brands";
-import Header from "./components/Header";
-import Products from "./components/Products";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./components/Login";
+import Register from "./components/Register";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+]);
 
 function App() {
-  // Components to be created
-  // + Navigation
-  // + Header
-  // + Brands
-  // + Products
-
-  return (
-    <div>
-      <Header />
-      <Brands />
-      <Products />
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

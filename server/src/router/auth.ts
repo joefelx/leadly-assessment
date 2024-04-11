@@ -20,13 +20,13 @@ router.post("/register", async (req, res) => {
 
     if (foundUser) {
       const response: ResponseType = {
-        status: 400,
+        status: 200,
         success: true,
         error: false,
         message: "Go to Login",
       };
 
-      return res.status(400).json(response);
+      return res.status(201).json(response);
     }
 
     // hashing the password
@@ -41,6 +41,8 @@ router.post("/register", async (req, res) => {
     // storing user in the database
     const user = new User({ name, email, password: hashedPassword, token });
     const saverUser = await user.save();
+
+    res.cookie("token", saverUser.token, { httpOnly: true, secure: true });
 
     const response: ResponseType = {
       status: 201,
@@ -88,6 +90,8 @@ router.post("/login", async (req, res) => {
 
         user.token = refreshedToken;
         await user.save();
+
+        res.cookie("token", refreshedToken, { httpOnly: true, secure: true });
 
         const response: ResponseType = {
           status: 200,

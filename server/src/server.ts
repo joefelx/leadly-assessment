@@ -2,19 +2,23 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import path from "path";
+import bodyParser from "body-parser";
 
 import authRouter from "./router/auth";
 import productRouter from "./router/product";
 
 const app = express();
 
-app.use(express.json());
+app.use(bodyParser.json());
+
 app.use(
   cors({
     origin: "http://localhost:5173",
     methods: ["GET", "POST"],
+    credentials: true,
   })
 );
+
 app.use(
   "/static",
   express.static(path.join(__dirname, "public")),
